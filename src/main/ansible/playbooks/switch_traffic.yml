@@ -1,0 +1,17 @@
+- hosts: nginx
+  vars:
+    active_environment: green
+  tasks:
+    - name: Update NGINX configuration for new environment
+      ansible.builtin.template:
+        src: ../roles/nginx/templates/nginx.conf.j2
+        dest: /etc/nginx/sites-available/default
+      notify: Reload NGINX
+      become: yes
+
+  handlers:
+    - name: Reload NGINX
+      ansible.builtin.systemd:
+        name: nginx
+        state: reloaded
+      become: yes

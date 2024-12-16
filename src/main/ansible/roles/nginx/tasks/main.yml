@@ -1,0 +1,25 @@
+- name: Install NGINX
+  ansible.builtin.apt:
+    name: nginx
+    state: present
+  become: yes
+
+- name: Configure NGINX for Blue-Green Deployment
+  ansible.builtin.template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/sites-available/default
+  notify: Reload NGINX
+  become: yes
+
+- name: Start NGINX
+  ansible.builtin.systemd:
+    name: nginx
+    state: started
+    enabled: yes
+  become: yes
+
+- name: Reload NGINX
+  ansible.builtin.systemd:
+    name: nginx
+    state: reloaded
+  become: yes

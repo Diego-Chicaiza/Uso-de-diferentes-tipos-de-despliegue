@@ -1,0 +1,10 @@
+- hosts: all
+  vars_files:
+    - ../vars/secrets.yml
+  roles:
+    - db
+    - app
+
+- hosts: nginx
+  roles:
+    - nginx

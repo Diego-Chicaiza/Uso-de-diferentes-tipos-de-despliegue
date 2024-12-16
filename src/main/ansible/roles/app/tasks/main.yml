@@ -1,0 +1,12 @@
+- name: Deploy Spring Boot application
+  ansible.builtin.copy:
+    src: /path/to/your/spring/boot/jar/application.jar
+    dest: /opt/myapp/application.jar
+
+- name: Start application
+  ansible.builtin.systemd:
+    name: myapp
+    state: started
+    enabled: yes
+    daemon_reload: yes
+    exec_start: "java -jar /opt/myapp/application.jar"
